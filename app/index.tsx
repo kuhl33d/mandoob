@@ -1,89 +1,77 @@
-// import { Button } from '@/components/ui/button';
-// import { Icon } from '@/components/ui/icon';
-// import { Text } from '@/components/ui/text';
-import { THEME } from '@/lib/theme';
-import { Link, Stack } from 'expo-router';
-import { MoonStarIcon, SunIcon } from 'lucide-react-native';
-import { useColorScheme } from 'nativewind';
-import * as React from 'react';
-import { Image, type ImageStyle, View } from 'react-native';
+import { View, ScrollView } from 'react-native';
+import { Link } from 'expo-router';
+import { Text } from '@/components/ui/text';
+import { TextInput } from '@/components/ui/text-input';
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { router } from 'expo-router';
 
-const LOGO = {
-  light: require('@/assets/images/react-native-reusables-light.png'),
-  dark: require('@/assets/images/react-native-reusables-dark.png'),
-};
+export default function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-const SCREEN_OPTIONS = {
-  light: {
-    title: 'React Native Reusables',
-    headerTransparent: true,
-    headerShadowVisible: true,
-    headerStyle: { backgroundColor: THEME.light.background },
-    headerRight: () => <ThemeToggle />,
-  },
-  dark: {
-    title: 'React Native Reusables',
-    headerTransparent: true,
-    headerShadowVisible: true,
-    headerStyle: { backgroundColor: THEME.dark.background },
-    headerRight: () => <ThemeToggle />,
-  },
-};
-
-const IMAGE_STYLE: ImageStyle = {
-  height: 76,
-  width: 76,
-};
-
-export default function Screen() {
-  const { colorScheme } = useColorScheme();
+  const handleLogin = () => {
+    // Handle login logic here
+    console.log({ email, password });
+    router.replace('/dashboard');
+  };
 
   return (
-    <>
-      <Stack.Screen options={SCREEN_OPTIONS[colorScheme ?? 'light']} />
-      <View className="flex-1 items-center justify-center gap-8 p-4">
-        <Image source={LOGO[colorScheme ?? 'light']} style={IMAGE_STYLE} resizeMode="contain" />
-        <View className="gap-2 p-4">
-          {/* <Text className="ios:text-foreground font-mono text-sm text-muted-foreground">
-            1. Edit <Text variant="code">app/index.tsx</Text> to get started.
-          </Text>
-          <Text className="ios:text-foreground font-mono text-sm text-muted-foreground">
-            2. Save to see your changes instantly.
-          </Text> */}
-        </View>
-        <View className="flex-row gap-2">
-          <Link href="https://reactnativereusables.com" asChild>
-            {/* <Button>
-              
-            </Button> */}
-          </Link>
-          <Link href="https://github.com/founded-labs/react-native-reusables" asChild>
-            {/* <Button variant="ghost">
-              
-            </Button> */}
-          </Link>
+    <ScrollView className="flex-1 bg-background">
+      <View className="flex-1 items-center justify-center p-4 min-h-screen">
+        <View className="w-full max-w-md">
+          <View className="items-center mb-8">
+            <Text className="text-2xl font-bold">PharmaConnect</Text>
+          </View>
+
+          <View className="bg-card rounded-lg shadow-sm p-8">
+            <View className="items-center mb-8">
+              <Text className="text-3xl font-bold mb-2">Welcome Back</Text>
+              <Text className="text-muted-foreground text-sm">
+                Login to manage your deliveries.
+              </Text>
+            </View>
+
+            <View className="gap-4">
+              <View>
+                <Text className="mb-2">Email</Text>
+                <TextInput
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="Enter your email"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  className="bg-input"
+                />
+              </View>
+
+              <View>
+                <Text className="mb-2">Password</Text>
+                <TextInput
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder="Enter your password"
+                  secureTextEntry
+                  className="bg-input"
+                />
+              </View>
+
+              <Button onPress={handleLogin} className="mt-4">
+                <Text className="text-primary-foreground">Login</Text>
+              </Button>
+            </View>
+
+            <View className="mt-6 items-center">
+              <Text className="text-sm text-muted-foreground">
+                Don't have an account?{' '}
+                <Link href="/signup" className="text-primary">
+                  <Text className="text-primary font-medium">Sign Up</Text>
+                </Link>
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
-    </>
-  );
-}
-
-const THEME_ICONS = {
-  light: SunIcon,
-  dark: MoonStarIcon,
-};
-
-function ThemeToggle() {
-  const { colorScheme, toggleColorScheme } = useColorScheme();
-
-  return (
-    // <Button
-    //   onPressIn={toggleColorScheme}
-    //   size="icon"
-    //   variant="ghost"
-    //   className="rounded-full web:mx-4">
-      
-    // </Button>
-    <button />
+    </ScrollView>
   );
 }
