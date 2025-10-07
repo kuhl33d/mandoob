@@ -4,9 +4,13 @@
     "strict": true,
     "jsx": "react-native",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     },
-    "types": ["react-native"],
+    "types": [
+      "react-native"
+    ],
     "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -17,11 +21,14 @@
     "moduleResolution": "bundler",
     "module": "esnext",
     "ignoreDeprecations": "6.0",
-    "customConditions": ["react-native"]
+    "customConditions": [
+      "react-native"
+    ]
   },
   "include": [
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "nativewind-env.d.ts"
   ],
   "exclude": [
     "node_modules"

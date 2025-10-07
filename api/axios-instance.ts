@@ -1,7 +1,15 @@
-import axios from "axios"
-import * as SecureStore from "expo-secure-store"
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
-const API_URL = "http://localhost:8080/api"
+import { Platform } from 'react-native';
+import getEnvVars from '../config/env';
+
+const env = getEnvVars();
+const API_URL = Platform.select({
+  android: env.apiUrl,
+  ios: env.iosApiUrl,
+  web: env.webApiUrl,
+}) || env.apiUrl;
 
 const axiosInstance = axios.create({
   baseURL: API_URL,

@@ -8,6 +8,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import "react-native-reanimated"
 import { ToastProvider } from "react-native-toast-notifications"
 import { AuthProvider } from "./context/auth-context"
+// @ts-ignore
 import "./global.css"
 
 // Keep the splash screen visible while we fetch resources

@@ -1,4 +1,4 @@
-"\"use client"
+"use client"
 
 import { useState, useEffect } from "react"
 import { View, Text, ScrollView, RefreshControl, StyleSheet, TouchableOpacity, Dimensions } from "react-native"
