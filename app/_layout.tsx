@@ -1,25 +1,44 @@
-import '@/global.css';
+"use client"
 
-import { NAV_THEME } from '@/lib/theme';
-import { ThemeProvider } from '@react-navigation/native';
-import { PortalHost } from '@rn-primitives/portal';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'nativewind';
+import { useEffect } from "react"
+import { useColorScheme } from "react-native"
+import { SplashScreen, Stack } from "expo-router"
+import { useFonts } from "expo-font"
+import { StatusBar } from "expo-status-bar"
+import { AuthProvider } from "@/context/auth-context"
+import { ThemeProvider } from "@/context/theme-context"
+import Toast from "react-native-toast-message"
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+// Prevent the splash screen from auto-hiding
+SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  const { colorScheme } = useColorScheme();
+  const colorScheme = useColorScheme()
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Regular": require("@/assets/fonts/Inter-Regular.ttf"),
+    "Inter-Medium": require("@/assets/fonts/Inter-Medium.ttf"),
+    "Inter-SemiBold": require("@/assets/fonts/Inter-SemiBold.ttf"),
+    "Inter-Bold": require("@/assets/fonts/Inter-Bold.ttf"),
+  })
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync()
+    }
+  }, [fontsLoaded])
+
+  if (!fontsLoaded) {
+    return null
+  }
 
   return (
-    <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-      <Stack />
-      <PortalHost />
+    <ThemeProvider defaultTheme={colorScheme === "dark" ? "dark" : "light"}>
+      <AuthProvider>
+        <StatusBar style="auto" />
+        <Stack screenOptions={{ headerShown: false }} />
+        <Toast />
+      </AuthProvider>
     </ThemeProvider>
-  );
+  )
 }
