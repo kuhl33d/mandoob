@@ -61,7 +61,7 @@ export function ThemeProvider({
 }: {
   children: React.ReactNode
   defaultTheme?: Theme
-}) {
+}): React.ReactNode {
   const [theme, setTheme] = useState<Theme>(defaultTheme)
   const colorScheme = useColorScheme()
 
